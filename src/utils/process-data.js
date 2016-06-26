@@ -32,8 +32,12 @@ const fieldNameConversion = {
 	productfeedurl: 'productFeedUrl',
 	publicmerchantprofile: 'publicMerchantProfile',
 	samplecommissionrates: 'sampleCommissionRates',
+	startdate: 'startDate',
 	uniqueid: 'uniqueId',
 	voidrate: 'voidRate',
+	voucherid: 'voucherId',
+	vouchercode: 'voucherCode',
+	voucherdescription: 'voucherDescription',
 }
 
 function getDate(date) {
@@ -72,6 +76,25 @@ export function normalizeLinkData(links) {
 				let value = link[linkItem][0]
 				out[newDataItemName] = value
 				out[newDataItemName] = dateValueFields.includes(newDataItemName) && value !== 'NA' ? getDate(value) : (value !== 'NA' ? out[newDataItemName] : undefined)
+			}
+		}
+
+		return out
+	})
+}
+
+export function normalizeVouchersData(vouchers) {
+	let dateValueFields = ['startDate', 'expiryDate']
+
+	return vouchers.map(voucher => {
+		let out = {}
+		for (let voucherItem in voucher) {
+			if (voucher.hasOwnProperty(voucherItem)) {
+				let normalizedFieldName = voucherItem.toLowerCase()
+				let newDataItemName = fieldNameConversion[normalizedFieldName] || normalizedFieldName
+				let value = voucher[voucherItem][0]
+				out[newDataItemName] = value
+				out[newDataItemName] = dateValueFields.includes(newDataItemName) && value ? getDate(value) : (value !== '' ? out[newDataItemName] : undefined)
 			}
 		}
 

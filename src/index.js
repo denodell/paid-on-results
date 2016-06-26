@@ -1,5 +1,5 @@
 import 'babel-polyfill'
-import { requestAdvertisers, requestLinks, requestProducts, requestTransactions } from './utils'
+import { requestAdvertisers, requestLinks, requestVouchers, requestProducts, requestTransactions } from './utils'
 //import dateFormat from 'dateformat'
 
 const defaultOptions = {
@@ -28,6 +28,17 @@ export default class PaidOnResults {
 			const { apiKey, affiliateId } = this.options
 
 			requestLinks({
+				apiKey,
+				affiliateId,
+			}).then(resolve).catch(reject)
+		})
+	}
+
+	getVouchers() {
+		return new Promise((resolve, reject) => {
+			const { apiKey, affiliateId } = this.options
+
+			requestVouchers({
 				apiKey,
 				affiliateId,
 			}).then(resolve).catch(reject)

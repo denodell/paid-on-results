@@ -11,13 +11,18 @@ describe(`Paid On Results`, it => {
 		})
 	})
 
-	it(`Advertisers`, async expect => {
+	it.skip(`Advertisers`, async expect => {
 		let advertisers = await POR.getAdvertisers()
 		expect.true(advertisers.length > 0)
 	})
 
-	it(`Links`, async expect => {
+	it.skip(`Links`, async expect => {
 		let links = await POR.getLinks()
 		expect.true(links.length > 0)
+	})
+
+	it(`Vouchers`, async expect => {
+		let vouchers = await POR.getVouchers()
+		expect.true(vouchers.length > 0)
 	})
 })

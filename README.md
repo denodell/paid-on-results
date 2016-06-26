@@ -45,6 +45,14 @@ Get links linked to the websiteId
 POR.getLinks()
 ```
 
+### Voucher Codes
+
+Get voucher codes linked to the websiteId
+
+```
+POR.getVouchers()
+```
+
 ## Test
 
 ```
