@@ -4,7 +4,7 @@ import PaidOnResults from '../'
 describe(`Paid On Results`, it => {
 	let POR
 
-	beforeEach(() => {
+	beforeEach(async () => {
 		POR = new PaidOnResults({
 			apiKey: 'UEIEXTLUQMOCMWZNUBOB',
 			affiliateId: '45574',
