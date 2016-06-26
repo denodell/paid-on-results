@@ -6,8 +6,8 @@ describe(`Paid On Results`, it => {
 
 	beforeEach(async () => {
 		POR = new PaidOnResults({
-			apiKey: 'UEIEXTLUQMOCMWZNUBOB',
-			affiliateId: '45574',
+			apiKey: 'abcdef123456',
+			affiliateId: '123456',
 		})
 	})
 
