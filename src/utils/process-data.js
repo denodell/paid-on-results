@@ -1,44 +1,4 @@
-const fieldNameConversion = {
-	accountmanager: 'accountManager',
-	accountmanageremail: 'accountManagerEmail',
-	affiliatestatus: 'affiliateStatus',
-	affiliateurl: 'affiliateUrl',
-	alttext: 'altText',
-	approvalrate: 'approvalRate',
-	averagebasket: 'averageBasket',
-	averagecommission: 'averageCommission',
-	conversionratio: 'conversionRatio',
-	cookielength: 'cookieLength',
-	creativeid: 'creativeId',
-	creativename: 'creativeName',
-	creativedescription: 'creativeDescription',
-	creativesize: 'creativeSize',
-	creativetype: 'creativeType',
-	creativeurl: 'creativeUrl',
-	dateadded: 'dateAdded',
-	datelaunched: 'dateLaunched',
-	deeplinks: 'deepLinks',
-	expirydate: 'expiryDate',
-	fullproductfeedurl: 'fullProductFeedUrl',
-	htmlcode: 'htmlCode',
-	lastfeedupdate: 'lastFeedUpdate',
-	merchantid: 'merchantId',
-	merchantcaption: 'merchantCaption',
-	merchantcategory: 'merchantCategory',
-	merchantname: 'merchantName',
-	merchantstatus: 'merchantStatus',
-	merchanturl: 'merchantUrl',
-	productfeed: 'productFeed',
-	productfeedurl: 'productFeedUrl',
-	publicmerchantprofile: 'publicMerchantProfile',
-	samplecommissionrates: 'sampleCommissionRates',
-	startdate: 'startDate',
-	uniqueid: 'uniqueId',
-	voidrate: 'voidRate',
-	voucherid: 'voucherId',
-	vouchercode: 'voucherCode',
-	voucherdescription: 'voucherDescription',
-}
+import fieldNameConversion from './field-name-map'
 
 function getDate(date) {
 	return new Date(date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0])
@@ -52,11 +12,11 @@ export function normalizeAdvertiserData(merchants) {
 
 		for (let dataItem in merchant) {
 			if (merchant.hasOwnProperty(dataItem)) {
-				let normalizedFieldName = dataItem.replace(/^ns1/g, '').toLowerCase()
+				let normalizedFieldName = dataItem.toLowerCase()
 				let newDataItemName = fieldNameConversion[normalizedFieldName] || normalizedFieldName
 				let value = merchant[dataItem][0]
 				out[newDataItemName] = value
-				out[newDataItemName] = dateValueFields.includes(newDataItemName) ? new Date(value) : out[newDataItemName]
+				out[newDataItemName] = dateValueFields.includes(newDataItemName) ? new Date(out[newDataItemName]) : out[newDataItemName]
 			}
 		}
 
@@ -71,11 +31,11 @@ export function normalizeLinkData(links) {
 		let out = {}
 		for (let linkItem in link) {
 			if (link.hasOwnProperty(linkItem)) {
-				let normalizedFieldName = linkItem.replace(/^ns1/g, '').toLowerCase()
+				let normalizedFieldName = linkItem.toLowerCase()
 				let newDataItemName = fieldNameConversion[normalizedFieldName] || normalizedFieldName
 				let value = link[linkItem][0]
 				out[newDataItemName] = value
-				out[newDataItemName] = dateValueFields.includes(newDataItemName) && value !== 'NA' ? getDate(value) : (value !== 'NA' ? out[newDataItemName] : undefined)
+				out[newDataItemName] = dateValueFields.includes(newDataItemName) && out[newDataItemName] !== 'NA' ? getDate(out[newDataItemName]) : (out[newDataItemName] !== 'NA' ? out[newDataItemName] : undefined)
 			}
 		}
 
@@ -94,10 +54,34 @@ export function normalizeVouchersData(vouchers) {
 				let newDataItemName = fieldNameConversion[normalizedFieldName] || normalizedFieldName
 				let value = voucher[voucherItem][0]
 				out[newDataItemName] = value
-				out[newDataItemName] = dateValueFields.includes(newDataItemName) && value ? getDate(value) : (value !== '' ? out[newDataItemName] : undefined)
+				out[newDataItemName] = dateValueFields.includes(newDataItemName) && out[newDataItemName] ? getDate(out[newDataItemName]) : (out[newDataItemName] !== '' ? out[newDataItemName] : undefined)
 			}
 		}
 
+		return out
+	})
+}
+
+export function normalizeTransactionData(transactions) {
+	let booleanValueFields = ['paidToAffiliate']
+	let numberValueFields = ['affiliateCommission', 'orderValue']
+	let dateValueFields = ['clickDate', 'dateAdded', 'orderDate', 'dateUpdated', 'datePaidToAffiliate']
+	let stringNAValueFields = ['creativeName', 'httpReferal', 'ipAddress', 'orderNotes']
+
+	return transactions.map(transaction => {
+		let out = {}
+		for (let transactionItem in transaction) {
+			if (transaction.hasOwnProperty(transactionItem)) {
+				let normalizedFieldName = transactionItem.toLowerCase()
+				let newDataItemName = fieldNameConversion[normalizedFieldName] || normalizedFieldName
+				let value = transaction[transactionItem][0]
+				out[newDataItemName] = value
+				out[newDataItemName] = booleanValueFields.includes(newDataItemName) && out[newDataItemName] ? out[newDataItemName] === 'YES' : (out[newDataItemName] !== 'NA' ? out[newDataItemName] : undefined)
+				out[newDataItemName] = numberValueFields.includes(newDataItemName) && out[newDataItemName] ? +out[newDataItemName] : (out[newDataItemName] !== 'NA' ? out[newDataItemName] : undefined)
+				out[newDataItemName] = dateValueFields.includes(newDataItemName) && out[newDataItemName] && out[newDataItemName] !== 'NA' && out[newDataItemName] !== 'NO' ? new Date(out[newDataItemName]) : (out[newDataItemName] !== 'NA' && out[newDataItemName] !== 'NO' ? out[newDataItemName] : undefined)
+				out[newDataItemName] = stringNAValueFields.includes(newDataItemName) && out[newDataItemName] && out[newDataItemName] !== 'NA' ? out[newDataItemName] : (out[newDataItemName] !== 'NA' ? out[newDataItemName] : undefined)
+			}
+		}
 		return out
 	})
 }

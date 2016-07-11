@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<PaidOnResults>
+<Transactions>
+<NetworkOrderID>TEST1000X</NetworkOrderID>
+<AffiliateID>1234</AffiliateID>
+<MerchantName>Alice's Pig</MerchantName>
+<MerchantID>1327</MerchantID>
+<DateAdded>2016-07-10 01:05:59</DateAdded>
+<DateUpdated>2016-07-10 01:05:59</DateUpdated>
+<ClickDate>2016-07-10 00:36:41</ClickDate>
+<OrderDate>2016-07-10 01:03:11</OrderDate>
+<CreativeName>NA</CreativeName>
+<CustomTrackingID>user_id</CustomTrackingID>
+<HTTPReferal>NA</HTTPReferal>
+<IPAddress>192.168.0.1</IPAddress>
+<AffiliateCommission>9.99</AffiliateCommission>
+<OrderValue>99.99</OrderValue>
+<TransactionType>PENDING</TransactionType>
+<OrderNotes>NA</OrderNotes>
+<PaidtoAffiliate>NO</PaidtoAffiliate>
+<DatePaidToAffiliate>NO</DatePaidToAffiliate>
+</Transactions>
+</PaidOnResults>

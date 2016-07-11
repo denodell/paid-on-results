@@ -2,6 +2,8 @@ import fetch from 'isomorphic-fetch'
 import _ from 'lodash'
 import { parseString as parseXML } from 'xml2js'
 
+let exposed = {}
+
 function xmlToJSON(xml) {
 	return new Promise((resolve, reject) => {
 		parseXML(xml, {
@@ -22,24 +24,27 @@ function xmlToJSON(xml) {
 	})
 }
 
-export function fetchXmlAsJson(url, headers) {
-	return new Promise((resolve, reject) => {
-		return fetch(url, { headers })
+function fetchXml(url, headers) {
+	return fetch(url, { headers })
 		.then(response => {
 			if (!response.ok) {
-				reject(response.statusText)
-				return
+				throw response.statusText
 			}
 			return response
 		})
-    .then(response => response.text())
-    .then(xmlToJSON)
-    .then(data => resolve(data))
-    .catch(reject)
+		.then(response => response.text())
+}
+
+function fetchXmlAsJson(url, headers) {
+	return new Promise((resolve, reject) => {
+		return exposed.fetchXml(url, headers)
+	    .then(xmlToJSON)
+	    .then(data => resolve(data))
+    	.catch(reject)
 	})
 }
 
-export async function fetchJson(url, headers) {
-	let response = await fetch(url, { headers })
-	return await response.json()
+module.exports = exposed = {
+	fetchXml,
+	fetchXmlAsJson,
 }

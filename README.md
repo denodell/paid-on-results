@@ -53,6 +53,14 @@ Get voucher codes linked to the websiteId
 POR.getVouchers()
 ```
 
+### Transactions
+
+Get transactions linked to the websiteId
+
+```
+POR.getTransactions()
+```
+
 ## Test
 
 ```

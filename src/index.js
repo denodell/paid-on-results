@@ -45,18 +45,24 @@ export default class PaidOnResults {
 		})
 	}
 
+	getTransactions() {
+		return new Promise((resolve, reject) => {
+			const { apiKey, affiliateId } = this.options
+
+			requestTransactions({
+				apiKey,
+				affiliateId,
+			}).then(resolve).catch(reject)
+		})
+	}
+
   // TODO
-  getTransactions() {
+	getProducts() {
 
-  }
-
-  // TODO
-  getProducts() {
-
-  }
+	}
 
   // TODO
-  searchProducts() {
+	searchProducts() {
 
-  }
+	}
 }
