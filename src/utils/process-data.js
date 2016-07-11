@@ -4,7 +4,7 @@ function getDate(date) {
 	return new Date(date.split('/')[2] + '-' + date.split('/')[1] + '-' + date.split('/')[0])
 }
 
-export function normalizeAdvertiserData(merchants) {
+export function normalizeAdvertiserData(merchants = []) {
 	let dateValueFields = ['dateLaunched', 'lastFeedUpdate']
 
 	return merchants.map(merchant => {
@@ -43,7 +43,7 @@ export function normalizeLinkData(links) {
 	})
 }
 
-export function normalizeVouchersData(vouchers) {
+export function normalizeVouchersData(vouchers = []) {
 	let dateValueFields = ['startDate', 'expiryDate']
 
 	return vouchers.map(voucher => {
@@ -62,7 +62,7 @@ export function normalizeVouchersData(vouchers) {
 	})
 }
 
-export function normalizeTransactionData(transactions) {
+export function normalizeTransactionData(transactions = []) {
 	let booleanValueFields = ['paidToAffiliate']
 	let numberValueFields = ['affiliateCommission', 'orderValue']
 	let dateValueFields = ['clickDate', 'dateAdded', 'orderDate', 'dateUpdated', 'datePaidToAffiliate']
