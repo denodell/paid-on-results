@@ -13,46 +13,38 @@ export default class PaidOnResults {
 	}
 
 	getAdvertisers({} = {}) {
-		return new Promise((resolve, reject) => {
-			const { apiKey, affiliateId } = this.options
+		const { apiKey, affiliateId } = this.options
 
-			requestAdvertisers({
-				apiKey,
-				affiliateId,
-			}).then(resolve).catch(reject)
+		return requestAdvertisers({
+			apiKey,
+			affiliateId,
 		})
 	}
 
 	getLinks() {
-		return new Promise((resolve, reject) => {
-			const { apiKey, affiliateId } = this.options
+		const { apiKey, affiliateId } = this.options
 
-			requestLinks({
-				apiKey,
-				affiliateId,
-			}).then(resolve).catch(reject)
+		return requestLinks({
+			apiKey,
+			affiliateId,
 		})
 	}
 
 	getVouchers() {
-		return new Promise((resolve, reject) => {
-			const { apiKey, affiliateId } = this.options
+		const { apiKey, affiliateId } = this.options
 
-			requestVouchers({
-				apiKey,
-				affiliateId,
-			}).then(resolve).catch(reject)
+		return requestVouchers({
+			apiKey,
+			affiliateId,
 		})
 	}
 
 	getTransactions() {
-		return new Promise((resolve, reject) => {
-			const { apiKey, affiliateId } = this.options
+		const { apiKey, affiliateId } = this.options
 
-			requestTransactions({
-				apiKey,
-				affiliateId,
-			}).then(resolve).catch(reject)
+		return requestTransactions({
+			apiKey,
+			affiliateId,
 		})
 	}
 
